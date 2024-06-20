@@ -1,0 +1,17 @@
+<div id="info" ng-init="init()">
+    <div class="page-header">
+        <h2>Application Info</h2>
+
+    </div>
+
+    <div class="row">
+        <div ng-include src="'templates/status.html'"></div>
+    </div>
+
+    <div class="row">
+        <ul>
+            <li><strong>Profiles:</strong> {{info.profiles.join()}}</li>
+            <li><strong>Services:</strong> {{info.services.join()}}</li>
+        </ul>
+    </div>
+</div>
