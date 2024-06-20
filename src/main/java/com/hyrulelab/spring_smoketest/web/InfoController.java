@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.bindings.Binding;
 import org.springframework.cloud.bindings.Bindings;
-import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,16 +23,22 @@ import io.pivotal.cfenv.core.CfService;
 public class InfoController {
     private final CfEnv cfEnv;
 
-    private Environment springEnvironment;
-
     @Autowired
-    public InfoController(Environment springEnvironment) {
-        this.springEnvironment = springEnvironment;
+    public InfoController() {
         this.cfEnv = new CfEnv();
     }
 
     @RequestMapping(value = "/request")
     public Map<String, String> requestInfo(HttpServletRequest req) {
+        return getRequestInfo(req);
+    }
+
+    @RequestMapping(value = "/appinfo")
+    public ApplicationInfo info(HttpServletRequest req) {
+        return new ApplicationInfo(getServiceNames(), getRequestInfo(req));
+    }
+
+    private Map<String, String> getRequestInfo(HttpServletRequest req) {
         HashMap<String, String> result = new HashMap<>();
         result.put("session-id", req.getSession().getId());
         result.put("protocol", req.getProtocol());
@@ -41,16 +46,6 @@ public class InfoController {
         result.put("scheme", req.getScheme());
         result.put("remote-addr", req.getRemoteAddr());
         return result;
-    }
-
-    @RequestMapping(value = "/appinfo")
-    public ApplicationInfo info() {
-        return new ApplicationInfo(springEnvironment.getActiveProfiles(), getServiceNames());
-    }
-
-    @RequestMapping(value = "/service")
-    public List<CfService> showServiceInfo() {
-        return cfEnv.findAllServices();
     }
 
     private String[] getServiceNames() {
