@@ -1,5 +1,11 @@
 package com.hyrulelab.spring_smoketest.web;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +41,7 @@ public class InfoController {
 
     @RequestMapping(value = "/appinfo")
     public ApplicationInfo info(HttpServletRequest req) {
-        return new ApplicationInfo(getServiceNames(), getRequestInfo(req));
+        return new ApplicationInfo(getServiceNames(), getRequestInfo(req), getMetadataInfo());
     }
 
     private Map<String, String> getRequestInfo(HttpServletRequest req) {
@@ -63,5 +69,35 @@ public class InfoController {
         names.addAll(bindingNames);
         
         return names.toArray(new String[0]);
+    }
+
+    private String getMetadataInfo() {
+        String az = "";
+        try {			
+			URI uri = new URI("http://169.254.169.254/latest/meta-data/placement/availability-zone");
+            URLConnection url = uri.toURL().openConnection();
+            url.setConnectTimeout(1000);
+			InputStream is = url.getInputStream();
+			StringBuilder sb = new StringBuilder();
+			
+			int ch;
+			while ((ch = is.read()) != -1) {
+				sb.append((char) ch);
+				System.out.print((char) ch);
+			}
+			az = sb.toString();
+        } catch (URISyntaxException e) {
+            System.out.println("URI Syntax - Curling metadata server");
+			e.printStackTrace();
+        } catch (MalformedURLException e) {
+			System.out.println("Malform - Curling metadata server");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("IOExcept - Curling metadata server");
+			e.printStackTrace();
+		} finally {
+			System.out.println("\n\nFinally - Curling metadata server");
+		}
+        return az;
     }
 }
