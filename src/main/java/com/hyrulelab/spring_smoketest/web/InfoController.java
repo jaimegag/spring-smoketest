@@ -72,11 +72,12 @@ public class InfoController {
     }
 
     private String getMetadataInfo() {
-        String az = "";
+        String az = "No Metadata info";
         try {			
 			URI uri = new URI("http://169.254.169.254/latest/meta-data/placement/availability-zone");
             URLConnection url = uri.toURL().openConnection();
             url.setConnectTimeout(1000);
+            url.setReadTimeout(3000);
 			InputStream is = url.getInputStream();
 			StringBuilder sb = new StringBuilder();
 			
