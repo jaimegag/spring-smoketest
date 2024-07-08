@@ -9,3 +9,5 @@ management:
   endpoint:
     health:
       show-details: always
+metadataserver:
+  hostname: metadataserver.hyrulelab.com

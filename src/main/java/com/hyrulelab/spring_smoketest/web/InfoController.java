@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.bindings.Binding;
 import org.springframework.cloud.bindings.Bindings;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,9 @@ public class InfoController {
     public InfoController() {
         this.cfEnv = new CfEnv();
     }
+
+    @Value("${metadataserver.hostname:metadataserver.hyrulelab.com}")
+    private String metadataserver;
 
     @RequestMapping(value = "/request")
     public Map<String, String> requestInfo(HttpServletRequest req) {
@@ -73,8 +77,11 @@ public class InfoController {
 
     private String getMetadataInfo() {
         String az = "No Metadata info";
-        try {			
-			URI uri = new URI("http://169.254.169.254/latest/meta-data/placement/availability-zone");
+        try {
+            StringBuilder sb_uri = new StringBuilder();
+            sb_uri.append("http://").append(this.metadataserver).append("/latest/meta-data/placement/availability-zone");
+            System.out.println("metadata server uri: "+sb_uri.toString());
+            URI uri = new URI(sb_uri.toString());
             URLConnection url = uri.toURL().openConnection();
             url.setConnectTimeout(1000);
             url.setReadTimeout(3000);
