@@ -1,7 +1,7 @@
 # Spring Smoketest
 This is a  simple Spring Boot Application designed and pre-built to be used for smoke testing purposes on the Tanzu Platform, to validate that an environment/space is ready to be used for Application Developers
 - It prints information about the request made to it.
-- It prints information about the Outbound IP of the environment where the application runs.
+- It prints information about the Outbound IP of the environment where the application runs. This needs egress connectivity to api.ipify.org
 - It prints the name of any Service bound to the applicaiton using Cloud Foundry or Kubernetes Service Bindings
 - It can also the metadata server endpoint in Public Cloud environments (currently disabled by default)
 
