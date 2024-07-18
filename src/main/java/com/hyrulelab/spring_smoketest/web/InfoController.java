@@ -41,7 +41,7 @@ public class InfoController {
 
     @RequestMapping(value = "/appinfo")
     public ApplicationInfo info(HttpServletRequest req) {
-        return new ApplicationInfo(getServiceNames(), getRequestInfo(req), getMetadataInfo());
+        return new ApplicationInfo(getServiceNames(), getRequestInfo(req), "", geIPInfo());
     }
 
     private Map<String, String> getRequestInfo(HttpServletRequest req) {
@@ -71,6 +71,7 @@ public class InfoController {
         return names.toArray(new String[0]);
     }
 
+    // Won't call this endpoint anymore since it only works in Public clouds
     private String getMetadataInfo() {
         String az = "No Metadata info";
         try {
@@ -100,5 +101,36 @@ public class InfoController {
 			System.out.println("\n\nFinally - Curling metadata server");
 		}
         return az;
+    }
+
+    private String geIPInfo() {
+        String ip = "No IP info";
+        try {
+            URI uri = new URI("https://api.ipify.org");
+            URLConnection url = uri.toURL().openConnection();
+            url.setConnectTimeout(1000);
+            url.setReadTimeout(3000);
+			InputStream is = url.getInputStream();
+			StringBuilder sb = new StringBuilder();
+			
+			int ch;
+			while ((ch = is.read()) != -1) {
+				sb.append((char) ch);
+				System.out.print((char) ch);
+			}
+			ip = sb.toString();
+        } catch (URISyntaxException e) {
+            System.out.println("URI Syntax - Curling IPfy");
+			e.printStackTrace();
+        } catch (MalformedURLException e) {
+			System.out.println("Malform - Curling IPfy");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("IOExcept - Curling IPfy");
+			e.printStackTrace();
+		} finally {
+			System.out.println("\n\nFinally - Curling IPfy");
+		}
+        return ip;
     }
 }
