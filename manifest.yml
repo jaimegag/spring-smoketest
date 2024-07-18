@@ -1,0 +1,7 @@
+---
+applications:
+- name: spring-smoketest
+  memory: 1G
+  path: build/libs/spring-smoketest-1.1.jar
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 21.+ } }'
