@@ -8,17 +8,17 @@ metadata:
   name: spring-smoketest
 spec:
   content:
-    buildTimestamp: "2024-09-20T14:28:43Z"
-    gitCommit: f7a2ba98af903a3a388c6603062bb3574eb152dc-dirty
+    buildTimestamp: "2024-10-24T19:47:22Z"
+    gitCommit: d34f56860ed3e1ff7e86c840dcab3135bdafa318-dirty
     gitURL: github.com/jaimegag/spring-smoketest.git
-    packageImage: ghcr.io/jaimegag/spring-smoketest@sha256:ace4745ae615eeb48997a0142c1a526bdb2d72800e870b4d4d003e9396de51a5
+    packageImage: ghcr.io/jaimegag/spring-smoketest@sha256:4ad6bb8fb3832f198c03e4b81fbfbac0210bbd9c7ee794b99376432ab6fa6d0a
     packageRefName: spring-smoketest.apps.local
-    packageVersion: 20240920.1428.43770
-    summary: git:f7a2ba9 @ 2024-09-20T14:28:43Z
-    version: 20240920.1428.43770
+    packageVersion: 20241024.1947.22656
+    summary: git:d34f568 @ 2024-10-24T19:47:22Z
+    version: 20241024.1947.22656
   health:
     maxUnavailableReplicas: 10%
-  image: ghcr.io/jaimegag/spring-smoketest@sha256:e4957b7697439af14d8b60718be69bc25e9eb0c2433191ae4b6c8e8a87a0bd6d
+  image: ghcr.io/jaimegag/spring-smoketest:20241024.1947.22656@sha256:e4957b7697439af14d8b60718be69bc25e9eb0c2433191ae4b6c8e8a87a0bd6d
   nonSecretEnv:
   - name: JAVA_TOOL_OPTIONS
     value: -Dmanagement.endpoint.health.probes.add-additional-paths=true -Dmanagement.health.probes.enabled=true
@@ -75,7 +75,7 @@ spec:
   - apiGroup: data.packaging.carvel.dev
     for: kubernetes.delete
     kind: Package
-    name: spring-smoketest.apps.local.20240920.1428.43770
+    name: spring-smoketest.apps.local.20241024.1947.22656
   - for: kubernetes.delete
     kind: Secret
     name: spring-smoketest-values

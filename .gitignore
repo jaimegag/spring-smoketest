@@ -38,4 +38,4 @@ out/
 
 ### TP ###
 tanzu.yml
-.tanzu/config/*.yml
+#.tanzu/config/*.yml # tanzu app init generated config
