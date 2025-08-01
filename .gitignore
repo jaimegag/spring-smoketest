@@ -39,3 +39,6 @@ out/
 ### TP ###
 tanzu.yml
 #.tanzu/config/*.yml # tanzu app init generated config
+
+### Advisor
+.advisor/
